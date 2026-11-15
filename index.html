@@ -1,0 +1,746 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#ece6dc">
+  <meta name="description" content="A special edition for Ammar Danish's 20th birthday.">
+  <title>A Little Day for Ammar Danish — 20th Birthday Edition</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --cream: #ece6dc;
+      --paper: #f5f1e9;
+      --ink: #050505;
+      --muted: #625e58;
+      --line: rgba(5, 5, 5, .2);
+      --pink: #e65bc4;
+      --pink-deep: #a93188;
+      --page-gutter: clamp(1.15rem, 5.1vw, 5.4rem);
+      --header-height: 76px;
+      --serif: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif;
+      --sans: "Arial", "Helvetica Neue", Helvetica, sans-serif;
+    }
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-block-start: calc(var(--header-height) + 18px); }
+    body { margin: 0; background: var(--cream); color: var(--ink); font-family: var(--sans); -webkit-font-smoothing: antialiased; }
+    img { display: block; max-width: 100%; }
+    button, a { color: inherit; font: inherit; }
+    button { -webkit-tap-highlight-color: transparent; }
+    a { text-decoration: none; }
+    ::selection { background: var(--pink); color: var(--ink); }
+    .skip-link { position: fixed; z-index: 1000; inset-block-start: 8px; inset-inline-start: 8px; padding: 12px 16px; background: var(--cream); color: var(--ink); transform: translateY(-150%); }
+    .skip-link:focus { transform: translateY(0); }
+    :focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
+    .eyebrow, .micro, .nav-link, .site-mark, .section-index, .image-caption, .data-label { font-size: .66rem; font-weight: 700; letter-spacing: .14em; line-height: 1.45; text-transform: uppercase; }
+    .eyebrow { display: flex; align-items: center; gap: 12px; margin: 0; }
+    .eyebrow::before { width: 26px; height: 1px; content: ""; background: currentColor; }
+    .section { position: relative; padding: clamp(5.6rem, 11vw, 10rem) var(--page-gutter); }
+    .section-heading { margin: 0; font-size: clamp(2.75rem, 7.3vw, 8rem); font-weight: 900; letter-spacing: -.085em; line-height: .87; text-transform: uppercase; }
+    .section-heading .serif { font-family: var(--serif); font-weight: 400; font-style: italic; letter-spacing: -.065em; text-transform: none; }
+    .section-topline { display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; margin-bottom: clamp(2.7rem, 6vw, 5.8rem); padding-bottom: 1rem; border-bottom: 1px solid var(--line); }
+    .section-index { color: var(--muted); white-space: nowrap; }
+    .rule { width: 100%; height: 1px; background: var(--line); }
+    .site-header { position: fixed; z-index: 100; inset: 0 0 auto; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; min-height: var(--header-height); padding: 0 var(--page-gutter); color: #fff; border-bottom: 1px solid rgba(255,255,255,.26); transition: color .25s ease, background-color .25s ease, border-color .25s ease; }
+    .site-header.is-scrolled { color: var(--ink); background: rgba(236,230,220,.96); border-color: var(--line); backdrop-filter: blur(12px); }
+    .site-mark { justify-self: start; line-height: 1.35; }
+    .site-mark span { display: block; color: var(--pink); }
+    .desktop-nav { display: flex; align-items: center; justify-content: center; gap: clamp(1rem, 2.1vw, 2.3rem); }
+    .nav-link { position: relative; padding: 13px 0; white-space: nowrap; font-size: .6rem; }
+    .nav-link::after { position: absolute; inset: auto 0 7px; height: 1px; content: ""; background: currentColor; transform: scaleX(0); transform-origin: left; transition: transform .2s ease; }
+    .nav-link:hover::after, .nav-link[aria-current="location"]::after { transform: scaleX(1); }
+    .header-edition { justify-self: end; font-size: .61rem; letter-spacing: .14em; text-transform: uppercase; }
+    .menu-toggle { display: none; justify-self: end; width: 46px; height: 46px; border: 1px solid currentColor; border-radius: 50%; background: transparent; cursor: pointer; }
+    .menu-toggle span, .menu-toggle::before, .menu-toggle::after { display: block; width: 16px; height: 1px; margin: 4px auto; background: currentColor; content: ""; transition: transform .2s ease; }
+    .menu-toggle[aria-expanded="true"] span { opacity: 0; }
+    .menu-toggle[aria-expanded="true"]::before { transform: translateY(5px) rotate(45deg); }
+    .menu-toggle[aria-expanded="true"]::after { transform: translateY(-5px) rotate(-45deg); }
+    .mobile-nav { position: absolute; inset: var(--header-height) 0 auto; padding: .5rem var(--page-gutter) 1.4rem; background: var(--cream); color: var(--ink); border-bottom: 1px solid var(--line); }
+    .mobile-nav[hidden] { display: none; }
+    .mobile-nav a { display: block; padding: .85rem 0; border-bottom: 1px solid var(--line); font-size: .72rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
+
+    .hero { position: relative; display: flex; min-height: 100svh; align-items: flex-end; overflow: hidden; padding: calc(var(--header-height) + 3rem) var(--page-gutter) clamp(2rem, 5vw, 4.6rem); background: #191817; color: #fff; isolation: isolate; }
+    .hero-media, .closing-media { position: absolute; z-index: -2; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+    .hero-media { inset-inline-start: 29%; inset-inline-end: 0; width: auto; object-position: center 58%; transform: translate3d(0,var(--hero-shift,0px),0) scale(1.06); }
+    .hero::before, .closing::before { position: absolute; z-index: -1; inset: 0; content: ""; background: linear-gradient(90deg, rgba(0,0,0,.78) 0%, rgba(0,0,0,.32) 55%, rgba(0,0,0,.06) 100%), linear-gradient(0deg, rgba(0,0,0,.62), transparent 58%); }
+    .hero-grid { display: grid; width: 100%; grid-template-columns: minmax(0, 1fr) minmax(130px, 18%); align-items: end; gap: 2rem; }
+    .hero-kicker { margin: 0 0 1.2rem; color: var(--pink); font-size: .7rem; font-weight: 700; letter-spacing: .22em; text-transform: uppercase; }
+    .hero-title { position: relative; z-index: 1; max-width: 1100px; margin: 0; font-size: clamp(4rem, 10vw, 12rem); font-weight: 900; letter-spacing: -.1em; line-height: .74; text-transform: uppercase; }
+    .hero-title span { display: block; }
+    .hero-title .outline-word { color: transparent; -webkit-text-stroke: 1px rgba(255,255,255,.84); }
+    .hero-name { display: block; max-width: 100%; margin-top: clamp(1.2rem, 3vw, 2.8rem); color: var(--pink); font-size: clamp(2rem, 6.1vw, 6.5rem); font-weight: 900; letter-spacing: -.075em; line-height: .86; overflow-wrap: anywhere; text-transform: uppercase; }
+    .hero-bottom { display: flex; align-items: end; justify-content: space-between; gap: 2rem; margin-top: clamp(2rem, 4vw, 3.7rem); }
+    .hero-copy { max-width: 360px; margin: 0; font-family: var(--serif); font-size: clamp(1rem, 1.5vw, 1.38rem); line-height: 1.35; }
+    .hero-copy em { display: block; margin-bottom: .35rem; font-family: var(--sans); font-size: .61rem; font-style: normal; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; }
+    .hero-cta { display: inline-flex; min-width: 116px; min-height: 116px; flex-direction: column; align-items: center; justify-content: center; gap: 8px; border: 1px solid rgba(255,255,255,.8); border-radius: 50%; color: #fff; text-align: center; transition: color .2s ease, background-color .2s ease, transform .2s ease; }
+    .hero-cta span:first-child { font-size: 1.4rem; line-height: 1; }
+    .hero-cta span:last-child { max-width: 80px; font-size: .52rem; font-weight: 700; letter-spacing: .1em; line-height: 1.3; text-transform: uppercase; }
+    .hero-cta:hover { color: var(--ink); background: var(--cream); transform: rotate(-8deg); }
+    .hero-side { align-self: center; justify-self: end; writing-mode: vertical-rl; transform: rotate(180deg); color: rgba(255,255,255,.78); font-size: .6rem; letter-spacing: .2em; text-transform: uppercase; }
+    .hero-grain { position: absolute; z-index: -1; inset: 0; pointer-events: none; opacity: .12; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.94' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.24'/%3E%3C/svg%3E"); mix-blend-mode: screen; }
+
+    .intro { display: grid; grid-template-columns: minmax(180px, .55fr) minmax(0, 1.45fr); align-items: start; gap: clamp(2.5rem, 9vw, 10rem); }
+    .intro-label { position: sticky; top: calc(var(--header-height) + 30px); }
+    .intro-label .eyebrow { margin-bottom: 1.5rem; }
+    .intro-label p:last-child { max-width: 180px; color: var(--muted); font-family: var(--serif); font-size: 1rem; line-height: 1.45; }
+    .intro-main h2 { margin: 0 0 clamp(2rem, 5vw, 4.4rem); font-size: clamp(3rem, 7vw, 7.6rem); font-weight: 900; letter-spacing: -.09em; line-height: .86; text-transform: uppercase; }
+    .intro-main h2 span { display: block; color: var(--pink-deep); font-family: var(--serif); font-weight: 400; font-style: italic; letter-spacing: -.075em; text-transform: none; }
+    .intro-feature { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(200px, .95fr); align-items: end; gap: clamp(1.5rem, 4vw, 4rem); }
+    .portrait-frame { position: relative; min-height: 420px; aspect-ratio: .82; overflow: hidden; background: #c7c0b6; }
+    .portrait-frame img { width: 100%; height: 100%; min-height: 420px; object-fit: cover; object-position: center 25%; filter: saturate(.66); }
+    .portrait-frame::after { position: absolute; inset: 0; content: ""; border: 1px solid rgba(255,255,255,.7); pointer-events: none; }
+    .portrait-tag { position: absolute; inset: auto 1rem 1rem; display: flex; justify-content: space-between; gap: 1rem; color: #fff; font-size: .58rem; font-weight: 700; letter-spacing: .13em; text-transform: uppercase; }
+    .profile-copy { padding-bottom: .4rem; }
+    .profile-meta { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); margin: 0 0 2rem; border-top: 1px solid var(--line); }
+    .profile-meta div { padding: 1rem .5rem 1rem 0; border-bottom: 1px solid var(--line); }
+    .profile-meta dt { margin-bottom: .45rem; color: var(--muted); font-size: .58rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; }
+    .profile-meta dd { margin: 0; font-size: .85rem; font-weight: 700; text-transform: uppercase; }
+    .profile-copy blockquote { max-width: 420px; margin: 0; font-family: var(--serif); font-size: clamp(1.65rem, 3vw, 2.65rem); line-height: 1.12; }
+    .profile-copy blockquote::before { display: block; margin-bottom: 1rem; color: var(--pink-deep); content: "“"; font-family: var(--serif); font-size: 4rem; line-height: .5; }
+    .profile-copy .micro { margin-top: 1.8rem; color: var(--muted); }
+
+    .archive { background: var(--paper); }
+    .archive-heading { display: flex; align-items: end; justify-content: space-between; gap: 2rem; }
+    .archive-heading .section-heading { max-width: 850px; }
+    .archive-intro { max-width: 190px; margin: 0 0 .4rem; color: var(--muted); font-family: var(--serif); font-size: 1rem; line-height: 1.4; }
+    .gallery-grid { display: grid; grid-template-columns: repeat(12,minmax(0,1fr)); grid-auto-rows: clamp(70px, 7vw, 105px); gap: clamp(1rem, 2vw, 1.8rem); align-items: start; }
+    .gallery-card { position: relative; display: block; width: 100%; padding: 0; overflow: hidden; border: 0; background: #cbc4ba; color: var(--ink); text-align: left; cursor: zoom-in; }
+    .gallery-card:nth-child(1) { grid-column: 1 / span 7; grid-row: span 5; }
+    .gallery-card:nth-child(2) { grid-column: 9 / span 4; grid-row: 2 / span 4; }
+    .gallery-card:nth-child(3) { grid-column: 3 / span 5; grid-row: 7 / span 4; }
+    .gallery-card:nth-child(4) { grid-column: 9 / span 4; grid-row: 7 / span 5; }
+    .gallery-card img { width: 100%; height: 100%; min-height: 100%; object-fit: cover; filter: saturate(.68); transition: transform .55s cubic-bezier(.2,0,0,1), filter .35s ease; }
+    .gallery-card:nth-child(1) img { object-position: center 35%; }
+    .gallery-card:nth-child(2) img { object-position: center 26%; }
+    .gallery-card:nth-child(3) img { object-position: center 42%; }
+    .gallery-card:hover img { transform: scale(1.035); filter: saturate(.94); }
+    .gallery-card::after { position: absolute; inset: 0; content: ""; background: linear-gradient(0deg,rgba(0,0,0,.48),transparent 45%); pointer-events: none; }
+    .gallery-card:focus-visible { outline: 3px solid var(--ink); outline-offset: 5px; }
+    .image-caption { position: absolute; z-index: 1; inset: auto 1rem 1rem; display: flex; align-items: end; justify-content: space-between; gap: 1rem; color: white; font-size: .58rem; letter-spacing: .11em; }
+    .image-caption span:last-child { font-family: var(--serif); font-size: .9rem; font-weight: 400; letter-spacing: 0; text-transform: none; }
+    .archive-note { display: flex; justify-content: space-between; gap: 1.5rem; margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--line); color: var(--muted); font-size: .64rem; letter-spacing: .08em; text-transform: uppercase; }
+    dialog { width: min(94vw, 1180px); max-width: none; max-height: 92dvh; padding: 0; overflow: auto; overscroll-behavior: contain; border: 1px solid rgba(255,255,255,.2); background: #090909; color: #fff; }
+    dialog::backdrop { background: rgba(0,0,0,.88); backdrop-filter: blur(4px); }
+    .lightbox-content { display: grid; grid-template-rows: minmax(0,1fr) auto; max-height: 92dvh; }
+    .lightbox-image-wrap { display: grid; min-height: 0; place-items: center; background: #090909; }
+    .lightbox-content img { max-width: 100%; max-height: 78dvh; object-fit: contain; }
+    .lightbox-footer { display: flex; justify-content: space-between; align-items: center; gap: 1rem; padding: 1rem 1.3rem; }
+    .lightbox-footer p { margin: 0; font-family: var(--serif); font-size: 1.05rem; }
+    .lightbox-close { width: 44px; height: 44px; border: 1px solid rgba(255,255,255,.7); border-radius: 50%; background: transparent; color: white; cursor: pointer; font-size: 1.3rem; }
+
+    .reasons { background: var(--cream); }
+    .reasons-intro { display: grid; grid-template-columns: 1fr minmax(180px, .35fr); align-items: end; gap: 2rem; margin: 0 0 clamp(2.5rem, 6vw, 5rem); }
+    .reasons-intro .section-heading { max-width: 900px; }
+    .reasons-intro p { margin: 0 0 .4rem; color: var(--muted); font-family: var(--serif); font-size: 1rem; line-height: 1.45; }
+    .notes-grid { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 1px; background: var(--ink); border: 1px solid var(--ink); }
+    .note { min-width: 0; background: var(--paper); }
+    .note:nth-child(6n + 2), .note:nth-child(6n + 5) { background: var(--ink); color: var(--cream); }
+    .note:nth-child(10n + 7) { background: var(--pink); color: var(--ink); }
+    .note-trigger { display: flex; width: 100%; min-height: clamp(155px, 16vw, 220px); flex-direction: column; justify-content: space-between; padding: clamp(1rem, 1.7vw, 1.7rem); border: 0; background: transparent; color: inherit; text-align: start; cursor: pointer; }
+    .note-num { font-size: clamp(2.7rem, 4.8vw, 5.4rem); font-weight: 900; letter-spacing: -.1em; line-height: .8; }
+    .note-bottom { display: flex; align-items: end; justify-content: space-between; gap: .7rem; }
+    .note-title { max-width: 190px; font-size: clamp(.76rem, 1vw, .95rem); font-weight: 700; letter-spacing: .02em; line-height: 1.12; text-transform: uppercase; }
+    .note-plus { display: grid; width: 34px; height: 34px; flex: 0 0 34px; place-items: center; border: 1px solid currentColor; border-radius: 50%; font-size: 1.15rem; line-height: 1; transition: transform .2s ease; }
+    .note.is-open .note-plus { transform: rotate(45deg); }
+    .note-copy { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .3s ease; }
+    .note-copy[hidden] { display: none; }
+    .note-copy > div { overflow: hidden; }
+    .note.is-open .note-copy { grid-template-rows: 1fr; }
+    .note-copy p { margin: 0; padding: 0 clamp(1rem, 1.7vw, 1.7rem) 1.7rem; font-family: var(--serif); font-size: 1.05rem; line-height: 1.35; }
+    .note.is-open .note-trigger { min-height: 120px; }
+    .note-trigger:focus-visible { outline-offset: -5px; }
+
+    .wish { display: grid; min-height: 90svh; grid-template-columns: minmax(0, .8fr) minmax(280px, 1.2fr); align-items: center; gap: clamp(2rem, 8vw, 9rem); overflow: hidden; background: var(--ink); color: var(--cream); }
+    .wish-copy .eyebrow { color: var(--pink); }
+    .wish-copy h2 { max-width: 560px; margin: 1.5rem 0 2rem; font-size: clamp(3.6rem, 8vw, 8.5rem); font-weight: 900; letter-spacing: -.095em; line-height: .82; text-transform: uppercase; }
+    .wish-copy h2 span { color: var(--pink); }
+    .wish-copy p { max-width: 330px; margin: 0; color: rgba(236,230,220,.74); font-family: var(--serif); font-size: 1.1rem; line-height: 1.45; }
+    .sculpture-stage { position: relative; display: grid; min-height: 510px; place-items: center; isolation: isolate; }
+    .stage-orbit { position: absolute; width: min(75vw, 610px); aspect-ratio: 1; border: 1px solid rgba(236,230,220,.17); border-radius: 50%; }
+    .stage-orbit::before, .stage-orbit::after { position: absolute; content: ""; border: 1px solid rgba(236,230,220,.1); border-radius: 50%; }
+    .stage-orbit::before { inset: 11%; }
+    .stage-orbit::after { inset: 24%; }
+    .cake-art { position: relative; z-index: 1; display: block; width: min(100%, 520px); height: auto; overflow: visible; filter: drop-shadow(0 20px 22px rgba(0,0,0,.18)); }
+    .cake-flame { transform-box: fill-box; transform-origin: 50% 100%; animation: flame-flicker 1.8s ease-in-out infinite alternate; transition: opacity .25s ease, transform .25s ease; }
+    @keyframes flame-flicker { from { transform: rotate(-3deg) scale(.97); } to { transform: rotate(4deg) scale(1.03); } }
+    .sculpture-stage.is-complete .cake-flame { opacity: 0; transform: translateY(-18px) scale(.35); animation: none; }
+    .wish-control { position: absolute; z-index: 6; top: 12%; left: 50%; width: 100px; height: 32%; min-height: 110px; padding: 0; transform: translateX(-50%); border: 0; border-radius: 50px; background: transparent; color: transparent; cursor: pointer; }
+    .wish-control:focus-visible { outline: 2px solid var(--pink); outline-offset: 3px; }
+    .wish-prompt { position: absolute; z-index: 5; inset: auto 0 .6rem; color: var(--pink); font-size: .62rem; font-weight: 700; letter-spacing: .16em; text-align: center; text-transform: uppercase; pointer-events: none; }
+    .wish-reveal { max-width: 400px; min-height: 5.5rem; margin-top: 1.3rem !important; color: var(--cream) !important; font-size: clamp(1.35rem, 2.1vw, 2rem) !important; font-weight: 900; letter-spacing: -.03em; line-height: 1 !important; text-transform: uppercase; }
+    .wish-reveal[hidden] { display: none; }
+    .wish-actions { margin-top: 1.4rem; }
+    .text-button { display: inline-flex; min-height: 48px; align-items: center; gap: .8rem; padding: .6rem 0; border: 0; border-bottom: 1px solid currentColor; background: transparent; color: inherit; font-size: .62rem; font-weight: 700; letter-spacing: .13em; text-transform: uppercase; cursor: pointer; }
+    .text-button span { font-size: 1.1rem; }
+    .particle-field { position: fixed; z-index: 95; inset: 0; overflow: hidden; pointer-events: none; }
+    .particle { position: absolute; top: -12px; width: 8px; height: 13px; opacity: 0; animation: confetti-fall 1.8s cubic-bezier(.1,.6,.3,1) forwards; }
+    @keyframes confetti-fall { 0% { opacity: 0; transform: translate3d(0,-10px,0) rotate(0); } 10% { opacity: 1; } 100% { opacity: 0; transform: translate3d(var(--drift),105vh,0) rotate(var(--turn)); } }
+
+    .closing { position: relative; display: flex; min-height: 100svh; flex-direction: column; justify-content: space-between; overflow: hidden; padding: calc(var(--header-height) + 6rem) var(--page-gutter) 2rem; background: #151515; color: #fff; isolation: isolate; }
+    .closing-media { object-position: center; filter: saturate(.5); }
+    .closing::before { background: linear-gradient(90deg,rgba(0,0,0,.7),rgba(0,0,0,.17)),linear-gradient(0deg,rgba(0,0,0,.77),transparent 70%); }
+    .closing-top { display: flex; justify-content: space-between; gap: 2rem; }
+    .closing-top .eyebrow { color: var(--pink); }
+    .closing-index { font-size: .62rem; letter-spacing: .17em; text-transform: uppercase; }
+    .closing-main { max-width: 1100px; padding-block: 4rem; }
+    .closing-main h2 { margin: 0 0 clamp(2rem, 4vw, 3.5rem); font-size: clamp(4rem, 14vw, 14rem); font-weight: 900; letter-spacing: -.105em; line-height: .73; text-transform: uppercase; }
+    .closing-main h2 span { display: block; color: var(--pink); }
+    .closing-message { max-width: 475px; margin: 0 0 2rem; color: rgba(255,255,255,.86); font-family: var(--serif); font-size: clamp(1.05rem, 1.6vw, 1.35rem); line-height: 1.4; }
+    .closing-name { margin: 0; font-size: clamp(.8rem, 1.1vw, 1rem); font-weight: 700; letter-spacing: .15em; text-transform: uppercase; }
+    .closing-footer { display: flex; align-items: end; justify-content: space-between; gap: 1rem; padding-top: 1.2rem; border-top: 1px solid rgba(255,255,255,.38); color: rgba(255,255,255,.78); }
+    .closing-footer p { margin: 0; font-size: .6rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; }
+    .back-top { display: inline-flex; width: 48px; height: 48px; align-items: center; justify-content: center; border: 1px solid rgba(255,255,255,.8); border-radius: 50%; color: #fff; font-size: 1.25rem; transition: color .2s ease, background-color .2s ease; }
+    .back-top:hover { color: var(--ink); background: var(--cream); }
+    .play-invite { background: var(--cream); }
+    .game-invite-grid { display: grid; grid-template-columns: minmax(0,.8fr) minmax(0,1.2fr); align-items: center; gap: clamp(2rem,8vw,8rem); }
+    .game-invite-copy { max-width: 570px; }
+    .game-invite-copy h2 { margin: 1.4rem 0 1.8rem; font-size: clamp(3.5rem,7.8vw,7rem); font-weight: 900; letter-spacing: -.095em; line-height: .8; text-transform: uppercase; }
+    .game-invite-copy h2 span { color: var(--pink-deep); font-family: var(--serif); font-weight: 400; font-style: italic; letter-spacing: -.07em; text-transform: none; }
+    .game-question { max-width: 440px; margin: 0 0 .8rem; font-family: var(--serif); font-size: clamp(1.45rem,2.6vw,2.1rem); line-height: 1.15; }
+    .game-description { max-width: 360px; margin: 0 0 1.7rem; color: var(--muted); font-size: .92rem; line-height: 1.5; }
+    .game-launch { display: inline-flex; min-height: 58px; align-items: center; justify-content: space-between; gap: 1.8rem; padding: .85rem 1.15rem; background: var(--ink); color: var(--cream); font-size: .67rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; transition: background-color .2s ease, color .2s ease, transform .2s ease; }
+    .game-launch span:last-child { color: var(--pink); font-size: 1.15rem; }
+    .game-launch:hover { background: var(--pink); color: var(--ink); transform: translateY(-2px); }
+    .game-launch:hover span:last-child { color: var(--ink); }
+    .game-link-note { margin: .8rem 0 0; color: var(--muted); font-size: .63rem; letter-spacing: .05em; }
+    .game-preview-card { display: block; padding: .8rem; border: 1px solid var(--ink); background: #090909; color: #fff; }
+    .game-preview-scene { position: relative; aspect-ratio: 1.58; overflow: hidden; background: linear-gradient(135deg,#362443 0%,#254050 54%,#b1657a 100%); }
+    .roblox-preview-backdrop { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: blur(16px) brightness(.42) saturate(.8); transform: scale(1.12); }
+    .roblox-preview-backdrop[hidden] { display: none; }
+    .roblox-preview-image { position: absolute; inset: 0; width: 100%; height: 100%; padding: .4rem; object-fit: contain; }
+    .roblox-preview-image[hidden] { display: none; }
+    .game-preview-fallback { position: absolute; inset: 0; display: grid; overflow: hidden; place-items: center; background: linear-gradient(180deg,#302137 0%,#283e4a 62%,#111 100%); }
+    .game-preview-fallback[hidden] { display: none; }
+    .game-preview-fallback::before { position: absolute; inset: 15% 9% 24%; content: ""; opacity: .72; background: linear-gradient(90deg,transparent 0 9%,#b3a4ab 9% 17%,transparent 17% 24%,#877b88 24% 35%,transparent 35% 44%,#c4b8b3 44% 54%,transparent 54% 61%,#877b88 61% 73%,transparent 73% 80%,#b3a4ab 80% 91%,transparent 91%),linear-gradient(0deg,transparent 0 82%,rgba(236,230,220,.18) 82% 83%,transparent 83%); clip-path: polygon(0 28%,12% 28%,12% 8%,23% 8%,23% 38%,35% 38%,35% 0,47% 0,47% 20%,59% 20%,59% 5%,68% 5%,68% 34%,81% 34%,81% 14%,100% 14%,100% 100%,0 100%); }
+    .game-preview-fallback::after { position: absolute; inset: auto 0 0; height: 34%; content: ""; background: linear-gradient(180deg,transparent,#101014 85%); }
+    .preview-sun { position: absolute; top: 12%; right: 15%; width: clamp(3rem,7vw,5rem); aspect-ratio: 1; border-radius: 50%; background: #e6a89d; box-shadow: 0 0 50px rgba(230,168,157,.32); }
+    .preview-fallback-title { position: absolute; z-index: 1; inset: auto 1.4rem 1.2rem; display: flex; align-items: end; justify-content: space-between; gap: 1rem; }
+    .preview-fallback-title strong { font-size: clamp(1.7rem,4vw,3.8rem); font-weight: 900; letter-spacing: -.08em; line-height: .82; text-transform: uppercase; }
+    .preview-fallback-title span { color: var(--pink); font-size: .58rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; }
+    .game-preview-meta { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 1rem .3rem .15rem; }
+    .game-preview-meta strong { display: block; font-size: .78rem; letter-spacing: .1em; text-transform: uppercase; }
+    .game-preview-meta span { color: rgba(236,230,220,.65); font-size: .58rem; letter-spacing: .11em; text-transform: uppercase; }
+    .game-preview-meta .preview-launch-mark { display: grid; width: 42px; height: 42px; flex: 0 0 42px; place-items: center; border: 1px solid rgba(236,230,220,.7); border-radius: 50%; color: var(--pink); font-size: 1.05rem; }
+    .preview-status { min-height: 1.2em; margin: .75rem .1rem 0; color: var(--muted); font-size: .65rem; }
+    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+
+    .motion-ready .reveal { opacity: 0; translate: 0 12px; filter: blur(4px); transition: opacity .5s ease, translate .5s ease, filter .5s ease; transition-delay: calc(var(--reveal-order, 0) * 100ms); }
+    .motion-ready .reveal.is-visible { opacity: 1; translate: 0 0; filter: blur(0); }
+    @media (hover: hover) {
+      .nav-link:hover { opacity: .72; }
+      .gallery-card:hover .image-caption { transform: translateY(-3px); }
+      .game-preview-card:hover .preview-launch-mark { color: var(--ink); background: var(--pink); }
+    }
+    @media (max-width: 1050px) {
+      .site-header { grid-template-columns: 1fr auto; }
+      .desktop-nav { gap: 1.15rem; }
+      .header-edition { display: none; }
+      .hero-title { font-size: clamp(4rem, 13.2vw, 9.5rem); }
+      .notes-grid { grid-template-columns: repeat(3,minmax(0,1fr)); }
+    }
+    @media (max-width: 760px) {
+      :root { --header-height: 68px; --page-gutter: 1.25rem; }
+      .site-header { grid-template-columns: 1fr auto; }
+      .desktop-nav { display: none; }
+      .menu-toggle { display: block; }
+      .hero { min-height: 100svh; padding-bottom: 2rem; }
+      .hero-media { inset-inline-start: 0; inset-inline-end: 0; width: 100%; object-position: 60% center; }
+      .hero::before { background: linear-gradient(90deg,rgba(0,0,0,.66),rgba(0,0,0,.2)),linear-gradient(0deg,rgba(0,0,0,.78),rgba(0,0,0,.03) 75%); }
+      .hero-grid { grid-template-columns: minmax(0,1fr); }
+      .hero-title { font-size: clamp(3.55rem, 17vw, 8rem); }
+      .hero-name { max-width: 90%; font-size: clamp(2.4rem, 11vw, 5rem); }
+      .hero-side { display: none; }
+      .hero-bottom { align-items: end; }
+      .hero-copy { max-width: 230px; }
+      .hero-cta { min-width: 92px; min-height: 92px; }
+      .intro { grid-template-columns: 1fr; gap: 2.6rem; }
+      .intro-label { position: static; display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; }
+      .intro-label .eyebrow { margin: 0; }
+      .intro-label p:last-child { max-width: 220px; margin: 0; text-align: right; }
+      .intro-feature { grid-template-columns: 1fr; }
+      .portrait-frame { min-height: 0; aspect-ratio: .95; }
+      .portrait-frame img { min-height: 0; }
+      .profile-copy { display: grid; grid-template-columns: 1fr; }
+      .archive-heading { align-items: start; flex-direction: column; }
+      .archive-intro { max-width: 280px; }
+      .gallery-grid { grid-auto-rows: 70px; gap: .8rem; }
+      .gallery-card:nth-child(1) { grid-column: 1 / span 8; grid-row: span 4; }
+      .gallery-card:nth-child(2) { grid-column: 9 / span 4; grid-row: 2 / span 3; }
+      .gallery-card:nth-child(3) { grid-column: 2 / span 6; grid-row: 6 / span 4; }
+      .gallery-card:nth-child(4) { grid-column: 8 / span 5; grid-row: 7 / span 4; }
+      .image-caption { inset-inline: .65rem; bottom: .65rem; flex-direction: column; align-items: start; gap: .15rem; font-size: .5rem; }
+      .image-caption span:last-child { font-size: .8rem; }
+      .archive-note { font-size: .55rem; }
+      .reasons-intro { grid-template-columns: 1fr; gap: 1.2rem; }
+      .reasons-intro p { max-width: 300px; }
+      .notes-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
+      .note-trigger { min-height: 155px; padding: 1rem; }
+      .note-num { font-size: clamp(3rem, 12vw, 5rem); }
+      .note-title { font-size: .76rem; }
+      .note-copy p { padding: 0 1rem 1.3rem; font-size: 1rem; }
+      .wish { grid-template-columns: 1fr; gap: 0; }
+      .wish-copy { max-width: 550px; }
+      .wish-copy h2 { max-width: 400px; }
+      .wish-copy p { max-width: 300px; }
+      .sculpture-stage { min-height: 390px; }
+      .stage-orbit { width: min(82vw, 440px); }
+      .cake-art { width: min(100%, 390px); }
+      .closing { min-height: 90svh; }
+      .closing-main h2 { font-size: clamp(3.8rem, 17vw, 8rem); }
+      .closing-top { flex-direction: column; }
+      .game-invite-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      .game-invite-copy { max-width: 520px; }
+      .game-invite-copy h2 { font-size: clamp(3.4rem,13vw,6.5rem); }
+    }
+    @media (max-width: 380px) {
+      .hero-title { font-size: 3.25rem; }
+      .hero-bottom { gap: 1rem; }
+      .hero-copy { max-width: 190px; font-size: .95rem; }
+      .hero-cta { min-width: 78px; min-height: 78px; }
+      .notes-grid { grid-template-columns: 1fr 1fr; }
+      .note-trigger { min-height: 140px; padding: .8rem; }
+      .note-plus { width: 30px; height: 30px; flex-basis: 30px; }
+      .gallery-grid { grid-auto-rows: 58px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+      .hero-media { transform: none; }
+      .motion-ready .reveal { opacity: 1; translate: none; filter: none; }
+    }
+    @media (forced-colors: active) {
+      .hero-cta, .back-top, .lightbox-close, .menu-toggle { border: 1px solid ButtonText; }
+      .gallery-card:focus-visible { outline: 2px solid Highlight; }
+      .note { border: 1px solid CanvasText; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header" id="siteHeader">
+    <a class="site-mark" href="#home" aria-label="A Little Day for You, home"><span>A special edition</span> / 2026</a>
+    <nav class="desktop-nav" aria-label="Main navigation">
+      <a class="nav-link" href="#home">Home</a>
+      <a class="nav-link" href="#person">The person</a>
+      <a class="nav-link" href="#archive">Archive</a>
+      <a class="nav-link" href="#things">20 things</a>
+      <a class="nav-link" href="#finale">The finale</a>
+      <a class="nav-link" href="#play-invite">One last thing</a>
+    </nav>
+    <span class="header-edition">A little day for you</span>
+    <button class="menu-toggle" id="menuToggle" type="button" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobileNav"><span></span></button>
+    <nav class="mobile-nav" id="mobileNav" aria-label="Mobile navigation" hidden>
+      <a href="#home">Home</a><a href="#person">The person</a><a href="#archive">Archive</a><a href="#things">20 things</a><a href="#wish">Make a wish</a><a href="#finale">The finale</a><a href="#play-invite">One last thing</a>
+    </nav>
+  </header>
+
+  <main id="main">
+    <section class="hero" id="home" aria-labelledby="heroTitle">
+      <img class="hero-media" id="heroImage" alt="" fetchpriority="high" decoding="async">
+      <div class="hero-grain" aria-hidden="true"></div>
+      <div class="hero-grid">
+        <div>
+          <p class="hero-kicker reveal">A day with your name on it</p>
+          <h1 class="hero-title reveal" id="heroTitle"><span>Twenty.</span><span class="outline-word">And counting.</span></h1>
+          <span class="hero-name" data-person-name>AMMAR DANISH</span>
+          <div class="hero-bottom reveal">
+            <p class="hero-copy"><em>Another year. Another chapter.</em>Today, the world celebrates you.</p>
+            <a class="hero-cta" href="#person"><span aria-hidden="true">↘</span><span>Enter the experience</span></a>
+          </div>
+        </div>
+        <span class="hero-side" aria-hidden="true">A portrait of a life in progress · 20 / 20</span>
+      </div>
+    </section>
+
+    <section class="section" id="person" aria-labelledby="personTitle">
+      <div class="section-topline"><p class="eyebrow">The person of the day</p><span class="section-index">01 / A closer look</span></div>
+      <div class="intro">
+        <div class="intro-label reveal">
+          <p class="eyebrow">An introduction</p>
+          <p>A small study of someone who makes the ordinary feel like a story.</p>
+        </div>
+        <div class="intro-main">
+          <h2 class="reveal" id="personTitle">Good to know.<span>Better to know you.</span></h2>
+          <div class="intro-feature">
+            <figure class="portrait-frame reveal" style="margin:0">
+              <img id="portraitImage" alt="" loading="lazy" decoding="async">
+              <figcaption class="portrait-tag"><span>Subject no. 020</span><span>2026 — ongoing</span></figcaption>
+            </figure>
+            <div class="profile-copy reveal">
+              <dl class="profile-meta">
+                <div><dt>Name</dt><dd data-person-name>AMMAR DANISH</dd></div>
+                <div><dt>Chapter</dt><dd>20</dd></div>
+                <div><dt>Birthday</dt><dd data-birthday-date>16 NOVEMBER · 2006</dd></div>
+                <div><dt>Status</dt><dd>3 years of friendship 🥳🎉</dd></div>
+              </dl>
+              <blockquote data-intro-copy>Twenty years in, and you have become the kind of person people remember: funny, generous, and there when it matters most.</blockquote>
+              <p class="micro">A few words for the one this is all about.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section archive" id="archive" aria-labelledby="archiveTitle">
+      <div class="section-topline"><p class="eyebrow">The archive</p><span class="section-index">02 / Collected moments</span></div>
+      <div class="archive-heading reveal">
+        <h2 class="section-heading" id="archiveTitle">Collected<br><span class="serif">moments.</span></h2>
+        <p class="archive-intro">A few frames from the story so far. More memories to come.</p>
+      </div>
+      <div class="gallery-grid" id="galleryGrid" aria-label="Photo archive"></div>
+      <div class="archive-note"><span>Open any frame to take a closer look</span><span>Archive / 001—004</span></div>
+    </section>
+
+    <section class="section reasons" id="things" aria-labelledby="thingsTitle">
+      <div class="section-topline"><p class="eyebrow">An incomplete list</p><span class="section-index">03 / Still counting</span></div>
+      <div class="reasons-intro reveal">
+        <h2 class="section-heading" id="thingsTitle">20 things.<br><span class="serif">One person.</span></h2>
+        <p>Twenty little reasons, memories and things worth saying out loud. Open a number to read the note.</p>
+      </div>
+      <div class="notes-grid" id="notesGrid"></div>
+    </section>
+
+    <section class="section wish" id="wish" aria-labelledby="wishTitle">
+      <div class="wish-copy reveal">
+        <p class="eyebrow">04 / A moment for you</p>
+        <h2 id="wishTitle">Make<br><span>a wish.</span></h2>
+        <p>One quiet second, one bright little flame. Take a breath, make your wish, then tap to let it go.</p>
+        <p class="wish-reveal" id="wishReveal" hidden>Your next chapter starts now.</p>
+        <div class="wish-actions"><button class="text-button" id="replayWish" type="button" hidden><span aria-hidden="true">↻</span> Replay the moment</button></div>
+        <p class="sr-only" id="wishStatus" role="status" aria-live="polite"></p>
+      </div>
+      <div class="sculpture-stage" id="wishStage">
+        <div class="stage-orbit" aria-hidden="true"></div>
+        <svg class="cake-art" viewBox="0 0 440 390" aria-hidden="true" focusable="false">
+          <defs>
+            <linearGradient id="cake-side" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0" stop-color="#aaa197"/><stop offset=".16" stop-color="#ded6cb"/><stop offset=".5" stop-color="#f4ede4"/><stop offset=".82" stop-color="#ded6cb"/><stop offset="1" stop-color="#a69d93"/>
+            </linearGradient>
+            <linearGradient id="cake-bottom" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#d8d0c5"/><stop offset="1" stop-color="#a79e94"/>
+            </linearGradient>
+            <linearGradient id="icing-top" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#fffaf1"/><stop offset="1" stop-color="#e8dfd4"/>
+            </linearGradient>
+            <linearGradient id="plate-top" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#f3ece2"/><stop offset="1" stop-color="#cfc6bb"/>
+            </linearGradient>
+            <linearGradient id="plate-edge" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#d7cec3"/><stop offset="1" stop-color="#8e877f"/>
+            </linearGradient>
+            <linearGradient id="stand" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0" stop-color="#7f7972"/><stop offset=".34" stop-color="#e8dfd4"/><stop offset=".7" stop-color="#cfc6bb"/><stop offset="1" stop-color="#716b64"/>
+            </linearGradient>
+            <linearGradient id="candle" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0" stop-color="#a59a90"/><stop offset=".3" stop-color="#fff7ec"/><stop offset="1" stop-color="#d8cec3"/>
+            </linearGradient>
+            <linearGradient id="flame-color" x1="0" y1="1" x2="0" y2="0">
+              <stop offset="0" stop-color="#ffb94f"/><stop offset=".62" stop-color="#ffc86b"/><stop offset="1" stop-color="#e65bc4"/>
+            </linearGradient>
+            <pattern id="candle-stripe" width="12" height="12" patternUnits="userSpaceOnUse" patternTransform="rotate(35)">
+              <rect width="12" height="12" fill="url(#candle)"/><rect width="3" height="12" fill="#bc80a8" opacity=".8"/>
+            </pattern>
+            <filter id="soft-glow" x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="11"/></filter>
+          </defs>
+          <ellipse cx="220" cy="344" rx="164" ry="15" fill="#000" opacity=".45"/>
+          <path d="M174 286c4 18 9 41 13 55h66c4-14 9-37 13-55z" fill="url(#stand)"/>
+          <path d="M45 281c0 15 78 26 175 26s175-11 175-26v10c0 15-78 26-175 26S45 306 45 291z" fill="url(#plate-edge)"/>
+          <ellipse cx="220" cy="281" rx="175" ry="31" fill="url(#plate-top)" stroke="#d9d0c5" stroke-width="1.5"/>
+          <ellipse cx="220" cy="249" rx="130" ry="36" fill="url(#cake-bottom)"/>
+          <rect x="90" y="137" width="260" height="112" fill="url(#cake-side)"/>
+          <rect x="90" y="137" width="12" height="112" fill="#6e675f" opacity=".13"/>
+          <rect x="338" y="137" width="12" height="112" fill="#554f49" opacity=".12"/>
+          <path d="M92 221c35 15 80 23 128 23s93-8 128-23" fill="none" stroke="#c04c9c" stroke-width="3" opacity=".75"/>
+          <ellipse cx="220" cy="137" rx="130" ry="36" fill="url(#icing-top)" stroke="#fffaf1" stroke-width="2"/>
+          <ellipse cx="220" cy="132" rx="123" ry="28" fill="#f7f1e9" opacity=".8"/>
+          <circle cx="151" cy="136" r="2.5" fill="#c04c9c" opacity=".8"/><circle cx="289" cy="139" r="2.5" fill="#c04c9c" opacity=".8"/>
+          <ellipse cx="220" cy="139" rx="19" ry="6" fill="#d7c4cf"/>
+          <path d="M220 82v-9" stroke="#29231f" stroke-width="2" stroke-linecap="round"/>
+          <rect x="214" y="80" width="12" height="61" rx="2" fill="url(#candle-stripe)" stroke="#b6aaa0" stroke-width=".7"/>
+          <path d="M216 83v52" stroke="#fffaf3" stroke-width="1.2" opacity=".7"/>
+          <g class="cake-flame">
+            <ellipse cx="220" cy="54" rx="29" ry="31" fill="#e65bc4" opacity=".42" filter="url(#soft-glow)"/>
+            <path d="M220 28c-7 14-16 23-15 34 0 9 6 15 15 15s15-7 15-16c0-10-9-23-15-33z" fill="url(#flame-color)"/>
+            <path d="M220 49c-4 7-6 11-5 16 1 4 3 6 5 6s5-3 5-7c0-5-2-10-5-15z" fill="#fff2c5"/>
+          </g>
+        </svg>
+        <span class="wish-prompt" id="wishPrompt">Tap the candle to make a wish</span>
+        <button class="wish-control" id="wishControl" type="button" aria-label="Blow out the birthday candle">Blow out the birthday candle</button>
+      </div>
+    </section>
+
+    <section class="closing" id="finale" aria-labelledby="finaleTitle">
+      <img class="closing-media" id="closingImage" alt="" loading="lazy" decoding="async">
+      <div class="closing-top"><p class="eyebrow">05 / The next chapter</p><span class="closing-index">The story keeps going</span></div>
+      <div class="closing-main reveal">
+        <h2 id="finaleTitle">To the<span>next 20.</span></h2>
+        <p class="closing-message">Here's to the memories we've made—and to the new book waiting for us. May the road ahead move smoothly and bring you plenty of reasons to laugh.<br><br>Keep being the funny, kind, generous person who shows up when it matters. Let's make the next chapter count, together.</p>
+        <p class="closing-name">Happy 20th birthday, <span data-person-name>AMMAR DANISH</span>.</p>
+      </div>
+      <footer class="closing-footer"><p>Made with appreciation. 2026.</p><a class="back-top" href="#home" aria-label="Back to the top">↑</a></footer>
+    </section>
+
+    <section class="section play-invite" id="play-invite" aria-labelledby="playInviteTitle">
+      <div class="section-topline"><p class="eyebrow">One last thing</p><span class="section-index">06 / For old times' sake</span></div>
+      <div class="game-invite-grid">
+        <div class="game-invite-copy reveal">
+          <h2 id="playInviteTitle">One last<br><span>round?</span></h2>
+          <p class="game-question">Would you play Roblox with me for the last time plsss 🥺🥺?</p>
+          <p class="game-description">Let's meet in <span data-game-title>Anti-Gravity</span> and make one more memory for the new book.</p>
+          <a class="game-launch game-link" href="https://www.roblox.com/games/13717130956/Anti-Gravity" target="_blank" rel="noopener noreferrer"><span data-game-cta>Play with me in Anti-Gravity</span><span aria-hidden="true">↗</span></a>
+          <p class="game-link-note">Opens the Roblox experience in a new tab.</p>
+        </div>
+        <div class="game-preview-wrap reveal">
+          <a class="game-preview-card game-link" id="robloxPreviewCard" href="https://www.roblox.com/games/13717130956/Anti-Gravity" target="_blank" rel="noopener noreferrer" aria-label="Open Anti-Gravity on Roblox in a new tab">
+            <div class="game-preview-scene">
+              <div class="game-preview-fallback" id="robloxPreviewFallback" aria-hidden="true" hidden>
+                <span class="preview-sun"></span>
+                <div class="preview-fallback-title"><strong data-game-title>Anti-Gravity</strong><span>Roblox<br>experience</span></div>
+              </div>
+              <img class="roblox-preview-backdrop" id="robloxPreviewBackdrop" alt="" aria-hidden="true" hidden>
+              <img class="roblox-preview-image" id="robloxPreviewImage" alt="" loading="lazy" decoding="async">
+            </div>
+            <div class="game-preview-meta"><div><strong data-game-title>Anti-Gravity</strong><span>Roblox experience · Place <span data-game-place>13717130956</span></span></div><span class="preview-launch-mark" aria-hidden="true">↗</span></div>
+          </a>
+          <p class="preview-status" id="robloxPreviewStatus" role="status" aria-live="polite">Official Roblox experience thumbnail</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <dialog id="lightbox" aria-label="Photograph viewer">
+    <div class="lightbox-content">
+      <div class="lightbox-image-wrap"><img id="lightboxImage" alt=""></div>
+      <div class="lightbox-footer"><p id="lightboxCaption"></p><button class="lightbox-close" id="lightboxClose" type="button" aria-label="Close photograph">×</button></div>
+    </div>
+  </dialog>
+  <div class="particle-field" id="particleField" aria-hidden="true"></div>
+
+  <script>
+    /*
+      PERSONALIZE THIS EDITION
+      Update the personal details and notes below. Replace image URLs and alt text
+      in images and photos with personal pictures. Local relative paths work offline.
+      No build tools are required: save and reopen this file in a browser.
+    */
+    const CONFIG = {
+      // PERSONAL DETAILS
+      name: "AMMAR DANISH",
+      birthdayDate: "16 NOVEMBER · 2006",
+      introduction: "Twenty years in, and you have become the kind of person people remember: funny, generous, and there when it matters most.",
+      game: { placeId: "13717130956", name: "Anti-Gravity", url: "https://www.roblox.com/games/13717130956/Anti-Gravity", previewImage: "assets/roblox-anti-gravity.png", buttonLabel: "Play with me in Anti-Gravity" },
+      // HERO, PORTRAIT AND CLOSING PHOTOS
+      images: {
+        hero: { src: "assets/ammar-portrait.jpg", alt: "Ammar in a close-up portrait wearing a black shirt" },
+        portrait: { src: "assets/ammar-hero.JPEG", alt: "Ammar at a cafe, photographed in warm evening light" },
+        finale: { src: "assets/ammar-finale.jpg", alt: "Ammar taking a full-length mirror photo" }
+      },
+      // ARCHIVE PHOTOS: add or replace entries; each one has a caption and alt text.
+      photos: [
+        { src: "assets/memory-laugh.jpg", alt: "Ammar at a table with a friend", caption: "The kind of day that runs long.", date: "FRAME 01" },
+        { src: "assets/memory-friends.jpg", alt: "Ammar and a friend out together", caption: "Somewhere along the way.", date: "FRAME 02" },
+        { src: "assets/memory-night.jpg", alt: "Ammar sitting with friends together after dark", caption: "A night for the archive.", date: "FRAME 03" },
+        { src: "assets/memory-train.jpeg", alt: "Ammar and friends riding together on a train", caption: "A good story, somewhere between stops.", date: "FRAME 04" }
+      ],
+      // REVEALABLE MESSAGES: edit the title and message in each pair.
+      notes: [
+        ["The one who stays", "When someone hits rock bottom, you show up. That kind of care doesn't get forgotten."],
+        ["AEON Nilai, after dark", "That haunted house trip turned one ordinary outing into a story we'll keep retelling."],
+        ["A year of jokes", "Some jokes need a whole year of context. Ours still land every time."],
+        ["The hotel-door moment", "That bathroom-door mix-up is still perfect timing in the story. The archive can leave the rest to our imagination."],
+        ["The infamous discovery", "One unexpected room-corner find became a legendary inside joke. No further evidence required."],
+        ["Kind by nature", "Your kindness reaches people in the moments when they need it most."],
+        ["Care that shows", "You make the people you care about feel seen. That matters more than you know."],
+        ["Generous, always", "You give your time, your attention, and your whole-hearted support."],
+        ["Funny without trying", "You can make a hard day feel lighter just by being yourself."],
+        ["A safe person", "People can bring you their lowest days and know they won't have to face them alone."],
+        ["Good heart", "The way you look after your people says everything about who you are."],
+        ["The friend group", "A whole year of jokes, and somehow we're still finding new ones."],
+        ["A story for later", "The best memories are the ones that become funnier every time we tell them."],
+        ["More than a laugh", "You're hilarious, but the kindness behind the jokes is what makes you special."],
+        ["A smooth road ahead", "I hope your path forward feels steady, open, and full of good things."],
+        ["Twenty looks good", "This next chapter has so much room for you to grow into everything you want."],
+        ["Keep showing up", "The way you stand beside people when life gets rough is one of your best qualities."],
+        ["More stories together", "Here's to more spontaneous plans, ridiculous jokes, and memories we haven't made yet."],
+        ["A new book", "I don't just want to reread the old pages. I want us to start a new book and fill it together."],
+        ["The next chapter", "I hope life moves smoothly for you, and that we keep writing the next chapter side by side."]
+      ]
+    };
+
+    const $ = (selector, root = document) => root.querySelector(selector);
+    const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
+    $$('[data-person-name]').forEach(node => node.textContent = CONFIG.name);
+    $$('[data-birthday-date]').forEach(node => node.textContent = CONFIG.birthdayDate);
+    $('[data-intro-copy]').textContent = CONFIG.introduction;
+    $$('.game-link').forEach(link => link.href = CONFIG.game.url);
+    $$('[data-game-title]').forEach(node => node.textContent = CONFIG.game.name);
+    $$('[data-game-place]').forEach(node => node.textContent = CONFIG.game.placeId);
+    $$('[data-game-cta]').forEach(node => node.textContent = CONFIG.game.buttonLabel);
+    $('#robloxPreviewCard').setAttribute('aria-label', `Open ${CONFIG.game.name} on Roblox in a new tab`);
+    [['#heroImage', CONFIG.images.hero], ['#portraitImage', CONFIG.images.portrait], ['#closingImage', CONFIG.images.finale]].forEach(([selector, image]) => {
+      const node = $(selector); node.src = image.src; node.alt = image.alt;
+    });
+
+    // The official Roblox thumbnail is stored locally; the experience itself opens on Roblox.
+    const gamePreviewImage = $('#robloxPreviewImage');
+    const gamePreviewBackdrop = $('#robloxPreviewBackdrop');
+    const gamePreviewFallback = $('#robloxPreviewFallback');
+    const gamePreviewStatus = $('#robloxPreviewStatus');
+    gamePreviewImage.addEventListener('error', () => {
+      gamePreviewImage.hidden = true;
+      gamePreviewBackdrop.hidden = true;
+      gamePreviewFallback.hidden = false;
+      gamePreviewStatus.textContent = 'Preview image unavailable; the Roblox game link is ready.';
+    }, { once: true });
+    gamePreviewBackdrop.addEventListener('error', () => { gamePreviewBackdrop.hidden = true; }, { once: true });
+    gamePreviewImage.src = CONFIG.game.previewImage;
+    gamePreviewBackdrop.src = CONFIG.game.previewImage;
+
+    const galleryGrid = $('#galleryGrid');
+    CONFIG.photos.forEach((photo, index) => {
+      const card = document.createElement('button');
+      card.className = 'gallery-card';
+      card.type = 'button';
+      card.setAttribute('aria-label', `Open photograph ${String(index + 1).padStart(2,'0')}: ${photo.caption}`);
+      card.dataset.photoIndex = index;
+      const image = document.createElement('img');
+      image.src = photo.src; image.alt = ''; image.loading = 'lazy'; image.decoding = 'async';
+      const caption = document.createElement('span'); caption.className = 'image-caption';
+      const date = document.createElement('span'); date.textContent = photo.date;
+      const text = document.createElement('span'); text.textContent = photo.caption;
+      caption.append(date, text); card.append(image, caption); galleryGrid.append(card);
+    });
+
+    const notesGrid = $('#notesGrid');
+    CONFIG.notes.forEach(([title, message], index) => {
+      const note = document.createElement('div'); note.className = 'note';
+      const summary = document.createElement('button'); summary.className = 'note-trigger'; summary.type = 'button';
+      summary.setAttribute('aria-expanded','false'); summary.setAttribute('aria-controls',`note-copy-${index + 1}`);
+      const number = document.createElement('span'); number.className = 'note-num'; number.textContent = String(index + 1).padStart(2,'0');
+      const bottom = document.createElement('span'); bottom.className = 'note-bottom';
+      const heading = document.createElement('span'); heading.className = 'note-title'; heading.textContent = title;
+      const plus = document.createElement('span'); plus.className = 'note-plus'; plus.setAttribute('aria-hidden','true'); plus.textContent = '+';
+      bottom.append(heading, plus); summary.append(number, bottom);
+      const copy = document.createElement('div'); copy.className = 'note-copy'; copy.id = `note-copy-${index + 1}`; copy.hidden = true;
+      const copyInner = document.createElement('div'); const paragraph = document.createElement('p'); paragraph.textContent = message;
+      copyInner.append(paragraph); copy.append(copyInner); note.append(summary, copy); notesGrid.append(note);
+      summary.addEventListener('click', () => {
+        const willOpen = summary.getAttribute('aria-expanded') !== 'true';
+        summary.setAttribute('aria-expanded', String(willOpen));
+        if (willOpen) {
+          copy.hidden = false;
+          requestAnimationFrame(() => note.classList.add('is-open'));
+        } else {
+          note.classList.remove('is-open');
+          window.setTimeout(() => { if (!note.classList.contains('is-open')) copy.hidden = true; }, 320);
+        }
+      });
+    });
+
+    const header = $('#siteHeader');
+    const menuToggle = $('#menuToggle');
+    const mobileNav = $('#mobileNav');
+    function closeMenu() {
+      menuToggle.setAttribute('aria-expanded','false');
+      menuToggle.setAttribute('aria-label','Open navigation menu');
+      mobileNav.hidden = true;
+    }
+    menuToggle.addEventListener('click', () => {
+      const willOpen = menuToggle.getAttribute('aria-expanded') !== 'true';
+      menuToggle.setAttribute('aria-expanded', String(willOpen));
+      menuToggle.setAttribute('aria-label', willOpen ? 'Close navigation menu' : 'Open navigation menu');
+      mobileNav.hidden = !willOpen;
+    });
+    $$('a', mobileNav).forEach(link => link.addEventListener('click', closeMenu));
+    document.addEventListener('keydown', event => { if (event.key === 'Escape' && !mobileNav.hidden) closeMenu(); });
+
+    const headerObserver = new IntersectionObserver(([entry]) => header.classList.toggle('is-scrolled', !entry.isIntersecting), { rootMargin: '-80px 0px 0px 0px', threshold: 0 });
+    headerObserver.observe($('#home'));
+    const navLinks = $$('.desktop-nav .nav-link');
+    const sectionObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        navLinks.forEach(link => {
+          if (link.hash === `#${entry.target.id}`) link.setAttribute('aria-current','location');
+          else link.removeAttribute('aria-current');
+        });
+      });
+    }, { rootMargin: '-35% 0px -55% 0px', threshold: 0 });
+    $$('main > section[id]').forEach(section => sectionObserver.observe(section));
+
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    if (!reducedMotion.matches && 'IntersectionObserver' in window) {
+      document.body.classList.add('motion-ready');
+      $$('.reveal').forEach((element, index) => element.style.setProperty('--reveal-order', Math.min(index % 4, 3)));
+      const revealObserver = new IntersectionObserver(entries => entries.forEach(entry => {
+        if (entry.isIntersecting) { entry.target.classList.add('is-visible'); revealObserver.unobserve(entry.target); }
+      }), { threshold: .12 });
+      $$('.reveal').forEach(element => revealObserver.observe(element));
+      const hero = $('.hero-media');
+      let scrollScheduled = false;
+      window.addEventListener('scroll', () => {
+        if (scrollScheduled) return;
+        scrollScheduled = true;
+        requestAnimationFrame(() => {
+          hero.style.setProperty('--hero-shift', `${Math.min(window.scrollY * .13, 75)}px`);
+          scrollScheduled = false;
+        });
+      }, { passive: true });
+    }
+
+    const lightbox = $('#lightbox');
+    const lightboxImage = $('#lightboxImage');
+    const lightboxCaption = $('#lightboxCaption');
+    let lastGalleryTrigger = null;
+    galleryGrid.addEventListener('click', event => {
+      const trigger = event.target.closest('.gallery-card');
+      if (!trigger) return;
+      const photo = CONFIG.photos[Number(trigger.dataset.photoIndex)];
+      lastGalleryTrigger = trigger;
+      lightboxImage.src = photo.src; lightboxImage.alt = photo.alt; lightboxCaption.textContent = `${photo.caption} · ${photo.date}`;
+      lightbox.showModal();
+    });
+    function closeLightbox() { lightbox.close(); }
+    $('#lightboxClose').addEventListener('click', closeLightbox);
+    lightbox.addEventListener('click', event => { if (event.target === lightbox) closeLightbox(); });
+    lightbox.addEventListener('close', () => { if (lastGalleryTrigger) lastGalleryTrigger.focus(); });
+
+    const wishStage = $('#wishStage');
+    const wishControl = $('#wishControl');
+    const wishReveal = $('#wishReveal');
+    const wishPrompt = $('#wishPrompt');
+    const replayWish = $('#replayWish');
+    const wishStatus = $('#wishStatus');
+    let wishComplete = false;
+    function launchConfetti() {
+      if (reducedMotion.matches) return;
+      const field = $('#particleField');
+      const colors = ['#e65bc4','#ece6dc','#d9aa6a','#ffffff'];
+      for (let i = 0; i < 56; i++) {
+        const bit = document.createElement('i'); bit.className = 'particle';
+        bit.style.left = `${Math.random() * 100}%`;
+        bit.style.backgroundColor = colors[i % colors.length];
+        bit.style.animationDelay = `${Math.random() * .55}s`;
+        bit.style.setProperty('--drift', `${Math.random() * 180 - 90}px`);
+        bit.style.setProperty('--turn', `${Math.random() * 920 - 460}deg`);
+        field.append(bit); window.setTimeout(() => bit.remove(), 2500);
+      }
+    }
+    function setWishComplete(complete) {
+      wishComplete = complete;
+      wishStage.classList.toggle('is-complete', complete);
+      wishReveal.hidden = !complete;
+      replayWish.hidden = !complete;
+      wishPrompt.textContent = complete ? 'Wish made. The next chapter awaits.' : 'Tap the candle to make a wish';
+      wishControl.setAttribute('aria-label', complete ? 'Relight the birthday candle' : 'Blow out the birthday candle');
+      wishStatus.textContent = complete ? 'Your next chapter starts now. The candle is out.' : 'The candle is lit. Make a wish.';
+      if (complete) launchConfetti();
+    }
+    wishControl.addEventListener('click', () => setWishComplete(!wishComplete));
+    replayWish.addEventListener('click', () => { setWishComplete(false); wishControl.focus(); });
+
+    // A missing photo file degrades to its neutral backing, without a broken icon.
+    $$('img').forEach(image => image.addEventListener('error', () => { image.style.visibility = 'hidden'; }, { once: true }));
+  </script>
+</body>
+</html>
